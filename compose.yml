@@ -20,7 +20,7 @@ services:
       KEYBOARD: omkbd/ergodash/rev1
       KEYMAP: kefi550
       SKIP_GIT: true
-    command: /bin/bash -c "qmk compile -kb $$KEYBOARD -km $$KEYMAP"
+    command: /bin/bash -c "qmk compile -kb $${KEYBOARD} -km $${KEYMAP}"
 
   flash:
     image: ghcr.io/qmk/qmk_cli
@@ -33,7 +33,7 @@ services:
       KEYBOARD: omkbd/ergodash/rev1
       KEYMAP: kefi550
       SKIP_GIT: true
-    command: /bin/bash -c "qmk flash -kb $$KEYBOARD -km $$KEYMAP"
+    command: /bin/bash -c "qmk flash -kb $${KEYBOARD} -km $${KEYMAP}"
 
   flash_from_json:
     image: ghcr.io/qmk/qmk_cli
@@ -45,4 +45,4 @@ services:
     environment:
       JSON_PATH: ./keymap_json/ergodash/rev1/keymaps/kefi550/keymap.json
       SKIP_GIT: true
-    command: /bin/bash -c "qmk flash $$JSON_PATH"
+    command: /bin/bash -c "qmk flash $${JSON_PATH}"
