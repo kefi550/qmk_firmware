@@ -34,3 +34,15 @@ services:
       KEYMAP: kefi550
       SKIP_GIT: true
     command: /bin/bash -c "qmk flash -kb $$KEYBOARD -km $$KEYMAP"
+
+  flash_from_json:
+    image: ghcr.io/qmk/qmk_cli
+    working_dir: /qmk_firmware
+    privileged: true
+    volumes:
+      - .:/qmk_firmware
+      - /dev:/dev:rw
+    environment:
+      JSON_PATH: ./keymap_json/ergodash/rev1/keymaps/kefi550/keymap.json
+      SKIP_GIT: true
+    command: /bin/bash -c "qmk flash $$JSON_PATH"
