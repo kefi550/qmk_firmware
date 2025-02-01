@@ -5,9 +5,9 @@ services:
     volumes:
       - .:/qmk_firmware
     environment:
-      JSON_PATH: keymap_json/ergodash/rev1/keymaps/kefi/keymap.json
+      JSON_PATH: keymap_json/ergodash/rev1/keymaps/kefi550/keymap.json
       KEYBOARD: omkbd/ergodash/rev1
-      KEYMAP: kefi
+      KEYMAP: kefi550
     command: /bin/bash -c "qmk json2c $${JSON_PATH} > keyboards/$${KEYBOARD}/keymaps/$${KEYMAP}/keymap.c"
 
   compile:
@@ -18,7 +18,7 @@ services:
       - ./.build:/qmk_firmware/.build
     environment:
       KEYBOARD: omkbd/ergodash/rev1
-      KEYMAP: kefi
+      KEYMAP: kefi550
       SKIP_GIT: true
     command: /bin/bash -c "qmk compile -kb $$KEYBOARD -km $$KEYMAP"
 
@@ -31,6 +31,6 @@ services:
       - /dev:/dev:rw
     environment:
       KEYBOARD: omkbd/ergodash/rev1
-      KEYMAP: kefi
+      KEYMAP: kefi550
       SKIP_GIT: true
     command: /bin/bash -c "qmk flash -kb $$KEYBOARD -km $$KEYMAP"
