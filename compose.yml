@@ -1,0 +1,36 @@
+services:
+  json2c:
+    image: ghcr.io/qmk/qmk_cli
+    working_dir: /qmk_firmware
+    volumes:
+      - .:/qmk_firmware
+    environment:
+      JSON_PATH: keymap_json/ergodash/rev1/keymaps/kefi/keymap.json
+      KEYBOARD: omkbd/ergodash/rev1
+      KEYMAP: kefi
+    command: /bin/bash -c "qmk json2c $${JSON_PATH} > keyboards/$${KEYBOARD}/keymaps/$${KEYMAP}/keymap.c"
+
+  compile:
+    image: ghcr.io/qmk/qmk_cli
+    working_dir: /qmk_firmware
+    volumes:
+      - .:/qmk_firmware
+      - ./.build:/qmk_firmware/.build
+    environment:
+      KEYBOARD: omkbd/ergodash/rev1
+      KEYMAP: kefi
+      SKIP_GIT: true
+    command: /bin/bash -c "qmk compile -kb $$KEYBOARD -km $$KEYMAP"
+
+  flash:
+    image: ghcr.io/qmk/qmk_cli
+    working_dir: /qmk_firmware
+    privileged: true
+    volumes:
+      - .:/qmk_firmware
+      - /dev:/dev:rw
+    environment:
+      KEYBOARD: omkbd/ergodash/rev1
+      KEYMAP: kefi
+      SKIP_GIT: true
+    command: /bin/bash -c "qmk flash -kb $$KEYBOARD -km $$KEYMAP"
